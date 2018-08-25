@@ -1,0 +1,49 @@
+version: '2'
+services:
+  db_1:
+      image: 'percona/percona-xtradb-cluster:latest'
+      ports:
+        - 33060:3306
+      environment:
+        - CLUSTER_NAME=pxc
+        - MYSQL_ROOT_PASSWORD=123456
+        - XTRABACKUP_PASSWORD=123456
+      volumes:
+        - v_db_1:/var/lib/mysql
+        - v_db_1_backup:/data
+      networks:
+        - order_net
+      privileged: true
+      cpu_shares: 50
+      mem_limit: 500m
+      memswap_limit: 500m
+
+  db_2:
+      image: 'percona/percona-xtradb-cluster:latest'
+      ports:
+        - 33061:3306
+      environment:
+        - CLUSTER_NAME=pxc
+        - MYSQL_ROOT_PASSWORD=123456
+        - XTRABACKUP_PASSWORD=123456
+        - CLUSTER_JOIN=db_1
+      volumes:
+        - v_db_2:/var/lib/mysql
+        - v_db_2_backup:/data
+      networks:
+        - order_net
+      depends_on:
+        - db_1
+      privileged: true
+      cpu_shares: 50
+      mem_limit: 500m
+      memswap_limit: 500m
+volumes:
+  v_db_1:
+  v_db_2:
+  v_db_1_backup:
+  v_db_2_backup:
+
+networks:
+  order_net:
+      driver: bridge
