@@ -1,7 +1,7 @@
 version: '2'
 services:
   web:
-      image: 'lyrewing/skyline-admin'
+      image: 'lyrewing/skyline-admin:1.0'
       ports:
         - 80:5000
       environment:
