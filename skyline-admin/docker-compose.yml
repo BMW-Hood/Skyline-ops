@@ -10,7 +10,7 @@ services:
         - MYSQL_ROOT_PASSWORD=123456
         - MYSQL_DB=admin
       networks:
-        - admin_net
+        - n_bridge
       depends_on:
         - db
       privileged: true
@@ -25,16 +25,15 @@ services:
         - MYSQL_ROOT_PASSWORD=123456
         - MYSQL_DATABASE=admin
       volumes:
-        - admin_db:/var/lib/mysql
+        - v_db:/var/lib/mysql
       networks:
-        - admin_net
+        - n_bridge
       privileged: true
       cpu_shares: 50
       mem_limit: 500m
       memswap_limit: 500m
-
 volumes:
-  admin_db:
+  v_db:
 networks:
-  admin_net:
+  n_bridge:
     driver: bridge
