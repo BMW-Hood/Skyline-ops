@@ -14,9 +14,9 @@ services:
       depends_on:
         - db
       privileged: true
-      cpu_shares: 50
-      mem_limit: 500m
-      memswap_limit: 500m
+      cpu_shares: 30
+      mem_limit: 100m
+      memswap_limit: 100m
   db:
       image: 'mysql:5.7'
       ports:
@@ -29,9 +29,9 @@ services:
       networks:
         - n_bridge
       privileged: true
-      cpu_shares: 50
-      mem_limit: 500m
-      memswap_limit: 500m
+      cpu_shares: 30
+      mem_limit: 200m
+      memswap_limit: 200m
 volumes:
   v_db:
 networks:
