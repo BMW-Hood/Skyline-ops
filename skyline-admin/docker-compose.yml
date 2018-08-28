@@ -17,7 +17,6 @@ services:
       cpu_shares: 50
       mem_limit: 500m
       memswap_limit: 500m
-
   db:
       image: 'mysql:5.7'
       ports:
