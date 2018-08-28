@@ -1,0 +1,41 @@
+version: '2'
+services:
+  web:
+      image: 'lyrewing/skyline-admin'
+      ports:
+        - 80:5000
+      environment:
+        - MYSQL_HOST=db
+        - MYSQL_PORT=3306
+        - MYSQL_ROOT_PASSWORD=123456
+        - MYSQL_DB=admin
+      networks:
+        - admin_net
+      depends_on:
+        - db
+      privileged: true
+      cpu_shares: 50
+      mem_limit: 500m
+      memswap_limit: 500m
+
+  db:
+      image: 'mysql:5.7'
+      ports:
+        - 33062:3306
+      environment:
+        - MYSQL_ROOT_PASSWORD=123456
+        - MYSQL_DATABASE=admin
+      volumes:
+        - admin_db:/var/lib/mysql
+      networks:
+        - admin_net
+      privileged: true
+      cpu_shares: 50
+      mem_limit: 500m
+      memswap_limit: 500m
+
+volumes:
+  admin_db:
+networks:
+  admin_net:
+    driver: bridge
