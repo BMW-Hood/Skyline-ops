@@ -1,0 +1,44 @@
+version: '2'
+services:
+  web:
+      image: 'serviceengine/surging:v0.9.0.2'
+      ports:
+        - 8098:98
+      environment:
+        - Mapping_ip=0.0.0.0
+        - Mapping_Port=8002
+        - RootPath=/surging
+        - Register_RoutePath=consul
+        - EventBusConnection=eventbus
+      networks:
+        - surging_bridge
+      depends_on:
+        - consul
+        - eventbus
+      privileged: true
+      cpu_shares: 40
+      mem_limit: 200m
+      memswap_limit: 200m
+  consul:
+      image: 'consul:1.2.2'
+      ports:
+        - 8500:8500
+      networks:
+        - surging_bridge
+      privileged: true
+      cpu_shares: 30
+      mem_limit: 200m
+      memswap_limit: 200m
+  eventbus:
+      image: 'rabbitmq'
+      ports:
+        - 15672:15672
+      networks:
+        - surging_bridge
+      privileged: true
+      cpu_shares: 30
+      mem_limit: 200m
+      memswap_limit: 200m
+networks:
+  surging_bridge:
+    driver: bridge
