@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skyline-ui
+spec:
+  selector:
+    matchLabels: 
+      app: skyline-ui
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: skyline-ui
+    spec: 
+      containers:
+       - name: skyline-ui
+         image: lyrewing/skyline-ui:1.2
+         ports:
+           - containerPort: 80
